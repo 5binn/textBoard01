@@ -14,31 +14,31 @@ public class ArticleRepository {
                 title, content, Container.getLoginedMember().getId());
         return Container.getDBConnection().insert(sql);
     }
-    public List<Article> list() {
+
+    public List<Article> findByAll() {
         List<Article> articleList = new ArrayList<>();
-        List<Map<String, Object>> rows = Container.getDBConnection().selectRows("SELECT * FROM article");
+        List<Map<String, Object>> rows = Container.getDBConnection().selectRows("SELECT A.id, A.title ,A.content ,A.regDate ,M.userId, A.memberId  " +
+                "FROM article AS A INNER JOIN `member` AS M ON A.memberId = M.id");
         for (Map<String, Object> row : rows) {
             Article article = new Article(row);
             articleList.add(article);
         }
         return articleList;
     }
+
     public int delete(int id) {
-        String sql = String.format("DELETE FROM article WHERE id = %d",id);
+        String sql = String.format("DELETE FROM article WHERE id = %d", id);
         return Container.getDBConnection().delete(sql);
     }
+
     public int modify(String title, String content, int id) {
         String sql = String.format("UPDATE article SET title = '%s', content = '%s' WHERE id = %d",
                 title, content, id);
         return Container.getDBConnection().update(sql);
     }
+
     public Article getSameArticle(int id) {
-        List<Article> articleList = new ArrayList<>();
-        List<Map<String, Object>> rows = Container.getDBConnection().selectRows("SELECT * FROM article");
-        for (Map<String, Object> row : rows) {
-            Article article = new Article(row);
-            articleList.add(article);
-        }
+        List<Article> articleList = this.findByAll();
         for (Article value : articleList) {
             if (value.getId() == id) {
                 return value;

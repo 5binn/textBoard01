@@ -51,6 +51,9 @@ public class App {
                 case "로그아웃":
                     memberController.logOut();
                     break;
+                case "회원탈퇴":
+                    memberController.remove();
+                    break;
             }
         }
 

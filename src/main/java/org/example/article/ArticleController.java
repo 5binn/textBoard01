@@ -27,12 +27,12 @@ public class ArticleController {
     }
 
     public void list() {
-        List<Article> articleList = this.articleService.list();
+        List<Article> articleList = this.articleService.findByAll();
         System.out.println("번호 | 제목 | 내용 | 작성자 | 작성일\n----------------------------------");
         for (Article article : articleList) {
-            System.out.printf("%d | %s | %s | %d | %s\n",
+            System.out.printf("%d | %s | %s | %s | %s\n",
                     article.getId(), article.getTitle(), article.getContent(),
-                    article.getMemberId(), article.getRegDate());
+                    article.getUserId(), article.getRegDate());
         }
     }
 

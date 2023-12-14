@@ -2,6 +2,8 @@ package org.example.member;
 
 import org.example.global.Container;
 
+import java.util.List;
+
 public class MemberService {
 
     MemberRepository memberRepository;
@@ -13,19 +15,24 @@ public class MemberService {
     public String create(String userId, String password) {
         return memberRepository.create(userId, password);
     }
+    public void remove() {
+        memberRepository.remove();
+    }
     public void login(Member checkedMember) {
         Container.setLoginedMember(checkedMember);
     }
-    public void logOut() {
+    public boolean logOut() {
         if (Container.getLoginedMember() == null) {
-            System.out.println("로그인을 먼저 해주세요.");
-            return;
+            return true;
         }
         Container.setLoginedMember(null);
-        System.out.println("로그아웃 되었습니다.");
+        return false;
     }
     public Member getSameIdCheck(String id) {
         return memberRepository.getSameIdCheck(id);
+    }
+    public List<Member> findByAll() {
+        return memberRepository.findByAll();
     }
 
     public boolean getFindById(Member checkedMember, String loginPassword) {

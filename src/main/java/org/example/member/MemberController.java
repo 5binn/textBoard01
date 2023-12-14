@@ -40,6 +40,24 @@ public class MemberController {
 
         System.out.println(id + "님 가입을 환영합니다.");
     }
+    public void remove() {
+        if (Container.getLoginedMember() == null) {
+            System.out.println("로그인을 먼저 해주세요.");
+            return;
+        }
+        while (true) {
+            System.out.print("회원탈퇴를 진행하시겠습니까?(Y/N) : ");
+            String response = Container.getSc().nextLine();
+            if (response.equals("Y") || response.equals("y")) {
+                memberService.remove();
+                System.out.println("회원탈퇴가 완료되었습니다.");
+                return;
+            }else if (response.equals("N") || response.equals("n")) {
+                return;
+            }
+            System.out.println("다시 입력해주세요.");
+        }
+    }
 
     public void logIn() {
         if (Container.getLoginedMember() != null) {
@@ -58,7 +76,11 @@ public class MemberController {
     }
 
     public void logOut() {
-        this.memberService.logOut();
+        if (memberService.logOut()) {
+            System.out.println("로그인을 먼저 해주세요.");
+            return;
+        }
+        System.out.println("로그아웃 되었습니다.");
     }
 
 }

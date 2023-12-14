@@ -13,8 +13,8 @@ public class ArticleService {
         return this.articleRepository.create(title, content);
     }
 
-    public List<Article> list() {
-        return this.articleRepository.list();
+    public List<Article> findByAll() {
+        return this.articleRepository.findByAll();
     }
 
     public int delete(int id) {
